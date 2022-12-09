@@ -1,5 +1,12 @@
 package studentManagement;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Writer;
+
 public class Staff {
 	private String username;
 	private String password;
@@ -23,6 +30,12 @@ public class Staff {
 		super();
 		this.username = username;
 		this.password = password;
+	}
+	public void creatAcct(Staff s) throws IOException {
+		File staffInfo=new File("StaffInfo.txt");
+		BufferedWriter out=new BufferedWriter(new FileWriter(staffInfo));
+		out.write('\n'+username+',');
+		out.write(password);
 	}
 
 }

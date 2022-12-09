@@ -101,5 +101,6 @@ public class Student {
 	public void setTotalGrades(double totalGrades) {
 		this.totalGrades = totalGrades;
 	}
+	
 
 }
