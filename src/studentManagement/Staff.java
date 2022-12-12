@@ -32,7 +32,7 @@ public class Staff {
 		this.password = password;
 	}
 	public void creatAcct(Staff s) throws IOException {
-		File staffInfo=new File("StaffInfo.txt");
+		File staffInfo=new File("/Users/tangyuwei/eclipse-workspace/studentManagement/src/studentManagement/adminInfo.txt");
 		BufferedWriter out=new BufferedWriter(new FileWriter(staffInfo));
 		out.write('\n'+username+',');
 		out.write(password);

@@ -1,5 +1,11 @@
 package studentManagement;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+
 public class Student {
 	private String name;
 	private String StudentID;
@@ -16,20 +22,28 @@ public class Student {
 		
 	}
 
-	public Student(String name, String studentID, String birthday, String major, String college, int age, String gender,
+	public Student(String name, String studentID, String birthday, String major, String gender,
 			double creditsGained, double totalGrades) {
 		super();
 		this.name = name;
 		StudentID = studentID;
 		Birthday = birthday;
 		this.major = major;
-		this.college = college;
-		this.age = age;
 		this.gender = gender;
 		this.creditsGained = creditsGained;
 		this.totalGrades = totalGrades;
 	}
-
+	public void input() throws IOException {
+		BufferedWriter myWriter=new BufferedWriter(new FileWriter("/Users/tangyuwei/eclipse-workspace/studentManagement/src/studentManagement/StdInfo.txt"));
+		myWriter.write("\n"+this.name+",");
+		myWriter.write(this.StudentID+",");
+		myWriter.write(this.Birthday+",");
+		myWriter.write(this.major+",");
+		myWriter.write(this.gender+",");
+		myWriter.write(Double.toString(this.creditsGained) );
+		myWriter.write(Double.toString(this.totalGrades));
+		
+	}
 	public String getName() {
 		return name;
 	}
@@ -62,21 +76,7 @@ public class Student {
 		this.major = major;
 	}
 
-	public String getCollege() {
-		return college;
-	}
-
-	public void setCollege(String college) {
-		this.college = college;
-	}
-
-	public int getAge() {
-		return age;
-	}
-
-	public void setAge(int age) {
-		this.age = age;
-	}
+	
 
 	public String getGender() {
 		return gender;
