@@ -1,4 +1,4 @@
-package studentManagement;
+package studentManagementSystem;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -11,8 +11,6 @@ public class Student {
 	private String StudentID;
 	private String Birthday;
 	private String major;
-	private String college;
-	private int age;
 	private String gender;
 	private double creditsGained;
 	private double totalGrades;
@@ -34,7 +32,7 @@ public class Student {
 		this.totalGrades = totalGrades;
 	}
 	public void input() throws IOException {
-		BufferedWriter myWriter=new BufferedWriter(new FileWriter("/Users/tangyuwei/eclipse-workspace/studentManagement/src/studentManagement/StdInfo.txt"));
+		BufferedWriter myWriter=new BufferedWriter(new FileWriter("/Users/tangyuwei/eclipse-workspace/studentManagement/src/studentManagementSystem/StdInfo.txt"));
 		myWriter.write("\n"+this.name+",");
 		myWriter.write(this.StudentID+",");
 		myWriter.write(this.Birthday+",");
