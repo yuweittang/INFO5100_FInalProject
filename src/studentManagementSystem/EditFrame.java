@@ -6,13 +6,20 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 public class EditFrame {
@@ -72,7 +79,7 @@ public class EditFrame {
 		JFrame frame = new JFrame();
 		frame.setTitle("Update Student Information");// 设置窗体的标题
 		frame.setSize(300, 650);// 设置窗体的大小，单位是像素
-		frame.setDefaultCloseOperation(3);// 设置窗体的关闭操作；3表示关闭窗体退出程序；2、1、0
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);// 设置窗体的关闭操作；3表示关闭窗体退出程序；2、1、0
 		frame.setLocationRelativeTo(null);// 设置窗体相对于另一个组件的居中位置，参数null表示窗体相对于屏幕的中央位置
 		frame.setResizable(true);// 设置禁止调整窗体大小
 		FlowLayout fl = new FlowLayout(FlowLayout.LEFT, 20, 10);
@@ -114,7 +121,22 @@ public class EditFrame {
 			}
 			
 		});
+		
 		JButton delete=new JButton("Delete Student");
+		delete.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				try {
+					addActionListener1(e);
+				} catch (IOException | SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+			
+		});
 		frame.add(nameInput);
 		frame.add(mjInput);
 		frame.add(stdID);
@@ -144,20 +166,26 @@ public class EditFrame {
 		String gender=gdInput.getText();
 		double creditsGained=0;
 		double totalGrades=0;
-		Student std=new Student(name,studentID,birthday,major,gender,creditsGained,totalGrades);
-		std.input();
-		BufferedReader in = new BufferedReader(new FileReader("/Users/tangyuwei/eclipse-workspace/studentManagement/src/studentManagementSystem/StdInfo.txt")); 
-		BufferedWriter myWriter=new BufferedWriter(new FileWriter("/Users/tangyuwei/eclipse-workspace/studentManagement/src/studentManagementSystem/StdInfo.txt"));
-		String str;
-		while ((str = in.readLine()) != null) {
-			String[] temp=str.split(",");
-			if(temp[0].equals(nameInput.getText())&&temp[1].equals(stdIDInput.getText())) {
-					
-				
-			}
+		MySQLDemo changeInfo=new MySQLDemo();
+		try {
+			changeInfo.updateStd(name, studentID, birthday, major, gender, creditsGained, totalGrades);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		JOptionPane.showMessageDialog(null, "Change has been saved!");
+		
 			
 	}
-		}
+	void addActionListener1(ActionEvent e) throws IOException, SQLException {
+		String name=nameInput.getText();
+		String studentID=stdIDInput.getText();
+		MySQLDemo deleteInfo=new MySQLDemo();
+		deleteInfo.deleteStd(name, studentID);
+		JOptionPane.showMessageDialog(null, "Student has been removed!");
+	}
+	
+		
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		new EditFrame().edit();

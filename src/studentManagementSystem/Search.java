@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.sql.SQLException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -26,7 +27,7 @@ public class Search {
 	public void search(){
 		JFrame frame = new JFrame();
 		frame.setSize(300, 650);// 设置窗体的大小，单位是像素
-		frame.setDefaultCloseOperation(3);// 设置窗体的关闭操作；3表示关闭窗体退出程序；2、1、0
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);// 设置窗体的关闭操作；3表示关闭窗体退出程序；2、1、0
 		frame.setLocationRelativeTo(null);// 设置窗体相对于另一个组件的居中位置，参数null表示窗体相对于屏幕的中央位置
 		frame.setResizable(true);// 设置禁止调整窗体大小
 		FlowLayout fl = new FlowLayout(FlowLayout.LEFT, 20, 10);
@@ -50,6 +51,9 @@ public class Search {
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
 				}
 			}
 			
@@ -59,13 +63,11 @@ public class Search {
 		frame.setVisible(true);
 		
 	}
-	void addActionListener(ActionEvent e) throws HeadlessException, IOException {
-		try (BufferedReader in = new BufferedReader(new FileReader("/Users/tangyuwei/eclipse-workspace/studentManagement/src/studentManagementSystem/StdInfo.txt"))) {
-			String str;
-			while ((str = in.readLine()) != null) {
-				String[] temp=str.split(",");
-				if(temp[0].equals(searchInput.getText())||temp[1].equals(searchInput.getText())) {
-					System.out.print(str);
+	void addActionListener(ActionEvent e) throws HeadlessException, IOException, SQLException {
+		MySQLDemo action=new MySQLDemo();
+		String[] temp=action.search(searchInput.getText());
+		
+		if(temp[0]!=null) {
 					EditFrame update=new EditFrame();
 					update.setNameInput(new JTextField(temp[0],18));
 					update.setStdIDInput(new JTextField(temp[1],18));
@@ -74,7 +76,7 @@ public class Search {
 					update.setGdInput(new JTextField(temp[4],18));
 					update.setCredits(new JTextField(temp[5],18));
 					update.setGrades(new JTextField(temp[6],18));
-					update.edit();
+//					
 //				JLabel name=new JLabel("Student Name"+temp[0]);
 //				JLabel ID=new JLabel("Student ID"+temp[1]);
 //				JLabel birthday=new JLabel("Birthday"+temp[2]);
@@ -88,15 +90,11 @@ public class Search {
 //				output.add(gender);
 //				output.add(creditsGained);
 //				output.add(totalGrade);
-						
-			}else {
+				update.edit();}
+		else {
 				JOptionPane.showMessageDialog(null, "No result found");
 				
 			}
-			
-
-}
-		}
 	}
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub

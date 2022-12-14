@@ -3,11 +3,14 @@ package studentManagementSystem;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.sql.SQLException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 public class StudentAccount {
@@ -23,7 +26,7 @@ public class StudentAccount {
 		JFrame frame = new JFrame();
 		frame.setTitle("Create a student account");// 设置窗体的标题
 		frame.setSize(300, 650);// 设置窗体的大小，单位是像素
-		frame.setDefaultCloseOperation(3);// 设置窗体的关闭操作；3表示关闭窗体退出程序；2、1、0
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);// 设置窗体的关闭操作；3表示关闭窗体退出程序；2、1、0
 		frame.setLocationRelativeTo(null);// 设置窗体相对于另一个组件的居中位置，参数null表示窗体相对于屏幕的中央位置
 		frame.setResizable(true);// 设置禁止调整窗体大小
 		FlowLayout fl = new FlowLayout(FlowLayout.LEFT, 20, 10);
@@ -50,6 +53,20 @@ public class StudentAccount {
 //		JLabel Grades =new JLabel("Grades");
 //		JTextField gdInput=new JTextField("Grades");
 		JButton submit=new JButton("Submit");
+		submit.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				try {
+					addActionListener(e);
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+			
+		});
 		frame.add(nameInput);
 		frame.add(mjInput);
 		frame.add(stdID);
@@ -74,7 +91,14 @@ public class StudentAccount {
 		double creditsGained=0;
 		double totalGrades=0;
 		Student std=new Student(name,studentID,birthday,major,gender,creditsGained,totalGrades);
-		std.input();
+		try {
+			std.input();
+			JOptionPane.showMessageDialog(null, "Student Information has been saved!");
+		} catch (IOException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub

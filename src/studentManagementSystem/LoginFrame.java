@@ -72,6 +72,7 @@ public class LoginFrame {
 			if(lg.login()) {
 				MainFrame menu=new MainFrame();
 				menu.menuPage();
+				
 			}else{
 				JOptionPane.showMessageDialog(null, "The username or password is incorrect");
 				

@@ -7,6 +7,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.sql.SQLException;
 
 public class Login {
 	private String username;
@@ -34,23 +35,23 @@ public class Login {
 		this.password = password;
 	}
 	public boolean login() throws IOException {
-		BufferedReader in = new BufferedReader(new FileReader("/Users/tangyuwei/eclipse-workspace/studentManagement/src/studentManagementSystem/adminInfo.txt"));
-		String str;
-		while ((str = in.readLine()) != null) {
-			String[] temp=str.split(",");
-			System.out.println(temp[0]);
-			System.out.println(temp[1]);
-			return temp[0].equals(this.username)&& temp[1].equals(this.password);
+			MySQLDemo lg=new MySQLDemo();
+		    try {
+				return lg.getLoginInfo(this.username, this.password);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return false;
+			
 		}
-		return false;
-		
 
-	}
 
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
 		Login lg=new Login("123","123");
 		lg.login();
+		System.out.println(lg.login());
 	}
 
 }

@@ -5,6 +5,7 @@ import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.sql.SQLException;
 
 public class Student {
 	private String name;
@@ -31,15 +32,9 @@ public class Student {
 		this.creditsGained = creditsGained;
 		this.totalGrades = totalGrades;
 	}
-	public void input() throws IOException {
-		BufferedWriter myWriter=new BufferedWriter(new FileWriter("/Users/tangyuwei/eclipse-workspace/studentManagement/src/studentManagementSystem/StdInfo.txt"));
-		myWriter.write("\n"+this.name+",");
-		myWriter.write(this.StudentID+",");
-		myWriter.write(this.Birthday+",");
-		myWriter.write(this.major+",");
-		myWriter.write(this.gender+",");
-		myWriter.write(Double.toString(this.creditsGained) );
-		myWriter.write(Double.toString(this.totalGrades));
+	public void input() throws IOException, SQLException {
+		MySQLDemo ms=new MySQLDemo();
+		ms.createStd(this.name, this.StudentID, this.Birthday, this.major, this.gender, 0, 0);
 		
 	}
 	public String getName() {
